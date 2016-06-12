@@ -12,17 +12,18 @@ class SearchBox extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
-  }
+  };
 
   render() {
     return(
-    <input
-      type="text"
-      placeholder="dummy search"
-      value={this.state.value}
-      onChange={this.handleChange}
-    />
-  )}
-}
+      <input
+        type="text"
+        placeholder="dummy search"
+        value={this.state.value}
+        onChange={this.handleChange}
+      />
+    );
+  };
+};
 
 export default SearchBox;
