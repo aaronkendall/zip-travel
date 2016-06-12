@@ -17,6 +17,7 @@ class SubmitButton extends React.Component {
 
   handleClick() {
     this.toggleLoading();
+    console.log(this.props.value)
   }
 
   render() {

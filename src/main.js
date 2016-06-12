@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SearchBox from './components/SearchBox.jsx';
-import SubmitButton from './components/SubmitButton.jsx';
+import TravelSearch from './components/TravelSearch.jsx';
 
 ReactDOM.render(
-  <div>
-    <SearchBox />
-    <SubmitButton />
-  </div>,
+  <TravelSearch />,
   document.getElementById('container')
 );

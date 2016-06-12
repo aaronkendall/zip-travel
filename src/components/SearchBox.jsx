@@ -4,14 +4,6 @@ import ReactDOM from 'react-dom';
 class SearchBox extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.handleChange = this.handleChange.bind(this)
-    this.state = {
-      value: ''
-    };
-  };
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
   };
 
   render() {
@@ -19,11 +11,11 @@ class SearchBox extends React.Component {
       <input
         type="text"
         placeholder="dummy search"
-        value={this.state.value}
-        onChange={this.handleChange}
+        value={this.props.value}
+        onChange={this.props.handleChange}
       />
     );
-  };
-};
+  }
+}
 
 export default SearchBox;
