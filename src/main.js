@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Hello from './components/hello.jsx';
+import Hello from './components/SearchBox.jsx';
 import World from './components/world.jsx';
 
 ReactDOM.render(
