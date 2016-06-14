@@ -1,4 +1,5 @@
 import React from 'react';
+import reqwest from 'reqwest';
 
 import SubmitButton from './SubmitButton.jsx';
 import SearchBox from './SearchBox.jsx';
@@ -26,7 +27,16 @@ class TravelSearch extends React.Component {
 
   getFlightData() {
     this.toggleLoading();
-    console.log(this.state.value);
+    let self = this;
+    reqwest({
+      url: 'http://localhost:3000/flights',
+      type: 'json',
+      method: 'post',
+      data: { 'origin': this.state.value, 'startDate': '2016-06-20'}
+    }).then(function(response) {
+      self.state.results = response.body;
+      self.toggleLoading();
+    });
   }
 
   render() {
