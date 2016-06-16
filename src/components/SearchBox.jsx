@@ -7,12 +7,14 @@ class SearchBox extends React.Component {
 
   render() {
     return(
-      <input
-        type="text"
-        placeholder="dummy search"
-        value={this.props.value}
-        onChange={this.props.handleChange}
-      />
+      <div className="col-md-offset-4 col-md-4 text-center">
+        <input
+          type="text"
+          placeholder="dummy search"
+          value={this.props.value}
+          onChange={this.props.handleChange}
+        />
+      </div>
     );
   }
 }

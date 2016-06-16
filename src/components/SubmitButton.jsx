@@ -7,7 +7,7 @@ class SubmitButton extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="col-md-offset-4 col-md-4 text-center">
         <button className="btn btn-success" onClick={this.props.handleClick}>
           Search Things
         </button>

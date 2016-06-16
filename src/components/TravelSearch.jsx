@@ -4,6 +4,7 @@ import reqwest from 'reqwest';
 import SubmitButton from './SubmitButton.jsx';
 import SearchBox from './SearchBox.jsx';
 import FlightsList from './FlightsList.jsx';
+import { DateField, Calendar } from 'react-date-picker';
 
 class TravelSearch extends React.Component {
   constructor(props, context) {
@@ -12,15 +13,27 @@ class TravelSearch extends React.Component {
     this.toggleLoading = this.toggleLoading.bind(this);
     this.getFlightData = this.getFlightData.bind(this);
     this.createFlightList = this.createFlightList.bind(this);
+    this.startDateChange = this.startDateChange.bind(this);
+    this.endDateChange = this.endDateChange.bind(this);
     this.state = {
       value: '',
       results: [],
-      loading: false
+      loading: false,
+      startDate: '',
+      endDate: ''
     }
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  startDateChange(dateString, { dateMoment, timestamp }) {
+    this.setState({startDate: dateString});
+  }
+
+  endDateChange(dateString, { dateMoment, timestamp }) {
+    this.setState({endDate: dateString});
   }
 
   toggleLoading() {
@@ -34,7 +47,11 @@ class TravelSearch extends React.Component {
       url: 'http://localhost:3000/flights',
       type: 'json',
       method: 'post',
-      data: {'origin': this.state.value, 'startDate': '2016-06-20', 'endDate': 'a thing'}
+      data: {
+        'origin': this.state.value,
+        'startDate': this.state.startDate,
+        'endDate': this.state.endDate
+      }
     }).then(function(response) {
       self.state.results.push(response);
       self.toggleLoading();
@@ -42,7 +59,7 @@ class TravelSearch extends React.Component {
   }
 
   createFlightList() {
-    if (this.state.results) {
+    if (this.state.results.length != 0) {
       return <FlightsList data={this.state.results} />
     }
     return null
@@ -54,8 +71,18 @@ class TravelSearch extends React.Component {
     return(
       <div>
         {loadingSpinner}
-        <SearchBox value={this.state.value} handleChange={this.handleChange} />
-        <SubmitButton handleClick={this.getFlightData} />
+        <div className="row">
+          <SearchBox value={this.state.value} handleChange={this.handleChange} />
+        </div>
+        <div className="row">
+          <div className="col-md-12 text-center">
+            <DateField dateFormat="YYYY-MM-DD" date={this.state.startDate} onChange={this.startDateChange}/>
+            <DateField dateFormat="YYYY-MM-DD" date={this.state.endDate} onChange={this.endDateChange}/>
+          </div>
+        </div>
+        <div className="row">
+          <SubmitButton handleClick={this.getFlightData} />
+        </div>
         {flightResults}
       </div>
     );
