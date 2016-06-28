@@ -53,7 +53,7 @@ class TravelSearch extends React.Component {
         'endDate': this.state.endDate
       }
     }).then(function(response) {
-      self.state.results.push(response);
+      self.state.results = response;
       self.toggleLoading();
     });
   }
