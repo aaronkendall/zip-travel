@@ -7,7 +7,7 @@ class FlightsList extends React.Component {
       <div>
         {this.props.data.map(function(quote) {
           return(
-          <div classNamme="col-md-12 well well-lg">
+          <div key={quote.id} classNamme="col-md-12 well well-lg">
             <div className="col-md-10 text-center">
               <div className="col-md-6">
                 <h3>Depart {quote.outboundFlight.departureDate}</h3>
