@@ -15,6 +15,7 @@ class TravelSearch extends React.Component {
     this.createFlightList = this.createFlightList.bind(this);
     this.startDateChange = this.startDateChange.bind(this);
     this.endDateChange = this.endDateChange.bind(this);
+    this.getAutoSuggestion = this.getAutoSuggestion.bind(this);
     this.state = {
       value: '',
       results: [],
@@ -26,6 +27,7 @@ class TravelSearch extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    this.getAutoSuggestion(event.target.value);
   }
 
   startDateChange(dateString, { dateMoment, timestamp }) {
@@ -38,6 +40,16 @@ class TravelSearch extends React.Component {
 
   toggleLoading() {
     this.setState({loading: !this.state.loading});
+  }
+
+  getAutoSuggestion(query) {
+    reqwest({
+      url: 'http://localhost:3000/autosuggest?query=' + query,
+      type: 'json',
+      method: 'get'
+    }).then(function(response) {
+      console.log(response);
+    });
   }
 
   getFlightData() {
