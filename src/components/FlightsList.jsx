@@ -5,7 +5,7 @@ class FlightsList extends React.Component {
   render() {
     return(
       <div>
-        {this.props.data.map(function(quote) {
+        {this.props.data.map((quote) => {
           return(
           <div key={quote.id} classNamme="col-md-12 well well-lg">
             <div className="col-md-10 text-center">

@@ -9,25 +9,20 @@ import { DateField, Calendar } from 'react-date-picker';
 class TravelSearch extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.handleChange = this.handleChange.bind(this);
     this.toggleLoading = this.toggleLoading.bind(this);
     this.getFlightData = this.getFlightData.bind(this);
     this.createFlightList = this.createFlightList.bind(this);
     this.startDateChange = this.startDateChange.bind(this);
     this.endDateChange = this.endDateChange.bind(this);
-    this.getAutoSuggestion = this.getAutoSuggestion.bind(this);
+    this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
     this.state = {
-      value: '',
+      searchValue: '',
+      searchId: '',
       results: [],
       loading: false,
       startDate: '',
       endDate: ''
     }
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-    this.getAutoSuggestion(event.target.value);
   }
 
   startDateChange(dateString, { dateMoment, timestamp }) {
@@ -42,30 +37,27 @@ class TravelSearch extends React.Component {
     this.setState({loading: !this.state.loading});
   }
 
-  getAutoSuggestion(query) {
-    reqwest({
-      url: 'http://localhost:3000/autosuggest?query=' + query,
-      type: 'json',
-      method: 'get'
-    }).then(function(response) {
-      console.log(response);
+  handleSuggestionSelection(suggestion) {
+    this.setState({
+      searchValue: suggestion.PlaceName,
+      searchId: suggestion.PlaceId
     });
   }
 
   getFlightData() {
     this.toggleLoading();
-    let self = this;
+    const self = this;
     reqwest({
       url: 'http://localhost:3000/flights',
       type: 'json',
       method: 'post',
       data: {
-        'origin': this.state.value,
+        'origin': this.state.searchId,
         'startDate': this.state.startDate,
         'endDate': this.state.endDate
       }
-    }).then(function(response) {
-      self.state.results = response;
+    }).then((response) => {
+      self.setState({results: response});
       self.toggleLoading();
     });
   }
@@ -84,7 +76,7 @@ class TravelSearch extends React.Component {
       <div>
         {loadingSpinner}
         <div className="row">
-          <SearchBox value={this.state.value} handleChange={this.handleChange} />
+          <SearchBox handleClick={this.handleSuggestionSelection} />
         </div>
         <div className="row">
           <div className="col-md-12 text-center">
